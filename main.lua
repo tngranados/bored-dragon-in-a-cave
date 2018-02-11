@@ -16,13 +16,12 @@ local projectiles = require "projectiles"
 local collisions = require "collisions"
 
 score = 0
-
-brackgroundImg = nil
-
 font = nil
 
+background = { x = 0, speed = 100 }
+
 function love.load(arg)
-	backgroundImg = love.graphics.newImage("assets/background.png")
+	background.img = love.graphics.newImage("assets/background.png")
 
 	player.load()
 	enemies.load()
@@ -35,6 +34,14 @@ end
 
 function love.update(dt)
 	width, height = love.graphics.getDimensions()
+
+	-- Background
+	if player.isAlive then
+		background.x = background.x + (background.speed * dt)
+		if background.x > width then
+			background.x = 0
+		end
+	end
 
 	-- Exit the game
 	if love.keyboard.isDown("escape") then
@@ -51,12 +58,15 @@ function love.update(dt)
 	if not player.isAlive and love.keyboard.isDown("r") then
 		projectiles.list = {}
 		enemies.list = {}
+		chickens.list = {}
 
 		player.isAlive = true
 		player.canShoot = true
-		player.shootTimer = player.shootTimerMax
+		player.shootTimer = 0
+		player.shootLimit = 0
 
 		enemyTimer = enemyTimerMax
+		chickenTimer = chickenTimerMax
 
 		player.x = playerXDefault
 		player.y = playerYDefault
@@ -66,7 +76,15 @@ function love.update(dt)
 end
 
 function love.draw(dt)
-	love.graphics.draw(backgroundImg, 0, 0)
+	-- Background
+	love.graphics.draw(background.img, 0 - background.x, 0)
+	if background.x > 0 then
+		love.graphics.draw(background.img, background.img:getWidth() - background.x, 0)
+	end
+
+	for i = 0, love.graphics.getWidth() / background.img:getWidth() - background.x do
+		love.graphics.draw(background.img, i * background.img:getWidth() - background.x, background.img:getHeight())
+    end
 
 	-- Debug
 	if debug then
