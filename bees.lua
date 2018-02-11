@@ -26,6 +26,7 @@ function bees.update(dt)
         bee.x = bee.x - (beeSpeed * dt)
         if bee.x < 0 - bee.x then
             table.remove(bees.list, i)
+            player.inAlive = false
         end
     end
 end
