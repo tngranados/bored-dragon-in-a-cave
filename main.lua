@@ -38,7 +38,7 @@ function love.update(dt)
 	width, height = love.graphics.getDimensions()
 
 	-- Background
-	if player.isAlive then
+	if player.health > 0 then
 		background.x = background.x + (background.speed * dt)
 		if background.x > width then
 			background.x = 0
@@ -58,13 +58,13 @@ function love.update(dt)
 	collisions.update(dt)
 
 	-- Endgame
-	if not player.isAlive and love.keyboard.isDown("r") then
+	if player.health <= 0 and love.keyboard.isDown("r") then
 		projectiles.list = {}
 		enemies.list = {}
 		bees.list = {}
 		chickens.list = {}
 
-		player.isAlive = true
+		player.health = player.healthMax
 		player.canShoot = true
 		player.shootTimer = 0
 		player.shootLimit = 0
@@ -102,7 +102,7 @@ function love.draw(dt)
 	love.graphics.printf(score, 0, 10, love.graphics.getWidth() - 20, "right")
 
 	-- Game
-	if player.isAlive then
+	if player.health > 0 then
 		player.draw(dt)
 		enemies.draw(dt)
 		bees.draw(dt)
