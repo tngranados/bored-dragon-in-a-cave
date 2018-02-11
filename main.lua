@@ -11,6 +11,7 @@ end
 -- Variables
 local player = require "player"
 local enemies = require "enemies"
+local chickens = require "chickens"
 local projectiles = require "projectiles"
 local collisions = require "collisions"
 
@@ -25,6 +26,7 @@ function love.load(arg)
 
 	player.load()
 	enemies.load()
+	chickens.load()
 
 	fontBig = love.graphics.newFont("assets/font.ttf", 72)
 	fontSmall = love.graphics.newFont("assets/font.ttf", 36)
@@ -43,6 +45,7 @@ function love.update(dt)
 	enemies.update(dt)
 	projectiles.update(dt)
 	collisions.update(dt)
+	chickens.update(dt)
 
 	-- Endgame
 	if not player.isAlive and love.keyboard.isDown("r") then
@@ -79,6 +82,7 @@ function love.draw(dt)
 	if player.isAlive then
 		player.draw(dt)
 		enemies.draw(dt)
+		chickens.draw(dt)
 		projectiles.draw(dt)
 	else
 		love.graphics.setFont(fontBig)

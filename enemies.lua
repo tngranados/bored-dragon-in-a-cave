@@ -15,11 +15,11 @@ end
 function enemies.update(dt)
     enemyTimer = enemyTimer - dt
     if enemyTimer <= 0 then
-    enemyTimer = enemyTimerMax
-    -- Create new enemy
-    rand = math.random(0, height - enemyImg:getHeight())
-    newEnemy = { x = width + enemyImg:getWidth(), y = rand, img = enemyImg}
-    table.insert(enemies.list, newEnemy)
+        enemyTimer = enemyTimerMax
+        -- Create new enemy
+        rand = math.random(0, height - enemyImg:getHeight())
+        newEnemy = { x = width + enemyImg:getWidth(), y = rand, img = enemyImg}
+        table.insert(enemies.list, newEnemy)
     end
 
     for i, enemy in ipairs(enemies.list) do
