@@ -10,6 +10,10 @@ local player = {
     canShoot = true,
     shootTimerMax = 0.2,
     shootTimer = 0,
+    shootLimitMax = 10,
+    shootLimit = 0,
+    shootLimitTimerMax = 0.6,
+    shootLimitTimer = 0,
     projectileImg = nil,
     projectileSpeed = 1000,
     isAlive = true
@@ -54,6 +58,19 @@ end
 
 function player.draw(dt)
     love.graphics.draw(player.img, player.x, player.y)
+    
+    love.graphics.setColor(33, 39, 39)
+    love.graphics.rectangle("fill", player.x, player.y - 20, player.img:getWidth(), 10)
+
+    if player.shootLimitMax / 2 >= player.shootLimit then -- 0% to 50%
+        love.graphics.setColor(153, 204, 51) -- green
+    elseif player.shootLimitMax / 5 * 4 >= player.shootLimit then -- 50% to 80%
+        love.graphics.setColor(254, 203, 102) -- yellow
+    else
+        love.graphics.setColor(217, 25, 33) -- red
+    end
+    love.graphics.rectangle("fill", player.x, player.y - 20, player.img:getWidth()/player.shootLimitMax*player.shootLimit, 10)
+    love.graphics.setColor(255,255,255) -- reset colors
 end
 
 return player
