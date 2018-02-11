@@ -37,10 +37,10 @@ function collisions.update(dt)
                 player.y,
                 player.img:getWidth(),
                 player.img:getHeight()
-            ) and player.isAlive
+            ) and player.health > 0
          then
             table.remove(enemies.list, i)
-            player.isAlive = false
+            player.health = player.health - 1
         end
     end
 
@@ -61,6 +61,9 @@ function collisions.update(dt)
              then
                 table.remove(bees.list, i)
                 table.remove(projectiles.list, j)
+                if player.health < player.healthMax then
+                    player.health = player.health + 1
+                end
                 score = score + 500
             end
         end
@@ -75,10 +78,10 @@ function collisions.update(dt)
                 player.y,
                 player.img:getWidth(),
                 player.img:getHeight()
-            ) and player.isAlive
+            ) and player.health > 0
          then
             table.remove(bees.list, i)
-            player.isAlive = false
+            player.health = player.health - 1
         end
     end
 

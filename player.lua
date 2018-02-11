@@ -4,6 +4,8 @@ playerYDefault = 270
 local player = {
     x = playerXDefault,
     y = playerYDefault,
+    healthMax = 3,
+    health = 3,
     xSpeed = 700,
     ySpeed = 550,
     img = nil,
@@ -16,12 +18,16 @@ local player = {
     shootLimitTimer = 0,
     projectileImg = nil,
     projectileSpeed = 1500,
-    isAlive = true
+    healthImg = nil,
+    healthBWImg = nil,
 }
 
 function player.load()
     player.img = love.graphics.newImage("assets/dragon.png")
     player.projectileImg = love.graphics.newImage("assets/fireball.png")
+
+    player.healthImg = love.graphics.newImage("assets/health.png")
+    player.healthBWImg = love.graphics.newImage("assets/health_bw.png")
 end
 
 function player.update(dt)
@@ -71,6 +77,15 @@ function player.draw(dt)
     end
     love.graphics.rectangle("fill", player.x, player.y - 20, player.img:getWidth()/player.shootLimitMax*player.shootLimit, 10)
     love.graphics.setColor(255,255,255) -- reset colors
+
+    -- Health
+    for i = 1, player.healthMax, 1 do
+        if i <= player.health then
+            love.graphics.draw(player.healthImg, 20 + i * player.healthImg:getWidth(), 10)
+        else
+            love.graphics.draw(player.healthBWImg, 20 + i * player.healthBWImg:getWidth(), 10)
+        end
+    end
 end
 
 return player
