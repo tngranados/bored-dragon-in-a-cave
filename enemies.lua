@@ -26,7 +26,7 @@ function enemies.update(dt)
         enemy.x = enemy.x - (enemySpeed * dt)
         if enemy.x < 0 - enemy.x then
             table.remove(enemies.list, i)
-            player.isAlive = false
+            player.health = player.health - 1
         end
     end
 end
