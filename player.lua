@@ -15,7 +15,7 @@ local player = {
     shootLimitTimerMax = 0.6,
     shootLimitTimer = 0,
     projectileImg = nil,
-    projectileSpeed = 1000,
+    projectileSpeed = 1500,
     isAlive = true
 }
 
