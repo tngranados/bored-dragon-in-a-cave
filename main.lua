@@ -28,6 +28,7 @@ function love.load(arg)
 
 	fontBig = love.graphics.newFont("assets/font.ttf", 72)
 	fontSmall = love.graphics.newFont("assets/font.ttf", 36)
+	debugFont = love.graphics.newFont("assets/font.ttf", 20)
 end
 
 function love.update(dt)
@@ -63,6 +64,12 @@ end
 
 function love.draw(dt)
 	love.graphics.draw(backgroundImg, 0, 0)
+
+	-- Debug
+	if debug then
+		love.graphics.setFont(debugFont)
+		love.graphics.printf(tostring(love.timer.getFPS()), 20, 10, love.graphics.getWidth(), "left")
+	end
 
 	-- Score
 	love.graphics.setFont(fontSmall)
