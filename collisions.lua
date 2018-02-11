@@ -1,6 +1,7 @@
 local collisions = {}
 local player = require "player"
 local enemies = require "enemies"
+local bees = require "bees"
 local chickens = require "chickens"
 local projectiles = require "projectiles"
 
@@ -39,6 +40,44 @@ function collisions.update(dt)
             ) and player.isAlive
          then
             table.remove(enemies.list, i)
+            player.isAlive = false
+        end
+    end
+
+    -- Bees
+    for i, bee in ipairs(bees.list) do
+        for j, projectile in ipairs(projectiles.list) do
+            if
+                CheckCollision(
+                    bee.x,
+                    bee.y,
+                    bee.img:getWidth(),
+                    bee.img:getHeight(),
+                    projectile.x,
+                    projectile.y,
+                    projectile.img:getWidth(),
+                    projectile.img:getHeight()
+                )
+             then
+                table.remove(bees.list, i)
+                table.remove(projectiles.list, j)
+                score = score + 500
+            end
+        end
+
+        if
+            CheckCollision(
+                bee.x,
+                bee.y,
+                bee.img:getWidth(),
+                bee.img:getHeight(),
+                player.x,
+                player.y,
+                player.img:getWidth(),
+                player.img:getHeight()
+            ) and player.isAlive
+         then
+            table.remove(bees.list, i)
             player.isAlive = false
         end
     end
