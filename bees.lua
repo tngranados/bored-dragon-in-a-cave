@@ -14,7 +14,7 @@ end
 
 function bees.update(dt)
     beeTimer = beeTimer - dt
-    if beeTimer <= 0 then
+    if beeTimer <= 0 and not bossBattle then
         beeTimer = beeTimerMax
         -- Creates new bee
         rand = math.random(0, height - enemyImg:getHeight())

@@ -14,7 +14,7 @@ end
 
 function enemies.update(dt)
     enemyTimer = enemyTimer - dt
-    if enemyTimer <= 0 then
+    if enemyTimer <= 0 and not bossBattle then
         enemyTimer = enemyTimerMax
         -- Create new enemy
         rand = math.random(0, height - enemyImg:getHeight())
