@@ -14,7 +14,7 @@ local player = {
     shootTimer = 0,
     shootLimitMax = 10,
     shootLimit = 0,
-    shootLimitTimerMax = 0.6,
+    shootLimitTimerMax = 0.5,
     shootLimitTimer = 0,
     projectileImg = nil,
     projectileSpeed = 1500,
@@ -65,8 +65,22 @@ end
 function player.draw(dt)
     love.graphics.draw(player.img, player.x, player.y)
     
+    
+    -- Health
+    for i = 1, player.healthMax, 1 do
+        if i <= player.health then
+            love.graphics.draw(player.healthImg, 20 + (i - 1) * player.healthImg:getWidth(), 10)
+        else
+            love.graphics.draw(player.healthBWImg, 20 + (i - 1) * player.healthBWImg:getWidth(), 10)
+        end
+    end
+
+    -- Shoot limit
     love.graphics.setColor(33, 39, 39)
-    love.graphics.rectangle("fill", player.x, player.y - 20, player.img:getWidth(), 10)
+    shootBarXPos = 20
+    shootBarYPos = 10 + player.healthImg:getHeight()
+    shootBarMaxWidth = player.healthMax * player.healthImg:getWidth()
+    love.graphics.rectangle("fill", shootBarXPos, shootBarYPos, shootBarMaxWidth, 10)
 
     if player.shootLimitMax / 2 >= player.shootLimit then -- 0% to 50%
         love.graphics.setColor(153, 204, 51) -- green
@@ -75,17 +89,8 @@ function player.draw(dt)
     else
         love.graphics.setColor(217, 25, 33) -- red
     end
-    love.graphics.rectangle("fill", player.x, player.y - 20, player.img:getWidth()/player.shootLimitMax*player.shootLimit, 10)
+    love.graphics.rectangle("fill", shootBarXPos, shootBarYPos, shootBarMaxWidth/player.shootLimitMax*player.shootLimit, 10)
     love.graphics.setColor(255,255,255) -- reset colors
-
-    -- Health
-    for i = 1, player.healthMax, 1 do
-        if i <= player.health then
-            love.graphics.draw(player.healthImg, 20 + i * player.healthImg:getWidth(), 10)
-        else
-            love.graphics.draw(player.healthBWImg, 20 + i * player.healthBWImg:getWidth(), 10)
-        end
-    end
 end
 
 return player

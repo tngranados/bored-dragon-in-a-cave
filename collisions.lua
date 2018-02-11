@@ -2,6 +2,7 @@ local collisions = {}
 local player = require "player"
 local enemies = require "enemies"
 local bees = require "bees"
+local eyeBeast = require "eyebeast"
 local chickens = require "chickens"
 local projectiles = require "projectiles"
 
@@ -84,6 +85,64 @@ function collisions.update(dt)
             player.health = player.health - 1
         end
     end
+
+    -- EyeBeast
+    if eyeBeast.isAlive then
+        for j, projectile in ipairs(projectiles.list) do
+            if
+                CheckCollision(
+                    eyeBeast.x,
+                    eyeBeast.y,
+                    eyeBeast.img:getWidth(),
+                    eyeBeast.img:getHeight(),
+                    projectile.x,
+                    projectile.y,
+                    projectile.img:getWidth(),
+                    projectile.img:getHeight()
+                )
+            then
+                eyeBeast.health = eyeBeast.health - 1
+                if eyeBeast.health <= 0 then
+                    endGame = true
+                end
+                table.remove(projectiles.list, j)
+            end
+        end
+
+        for j, bomb in ipairs(eyeBeast.bombsList) do
+            if
+                CheckCollision(
+                    player.x,
+                    player.y,
+                    player.img:getWidth(),
+                    player.img:getHeight(),
+                    bomb.x,
+                    bomb.y,
+                    bomb.img:getWidth(),
+                    bomb.img:getHeight()
+                )
+            then
+                player.health = player.health - 1
+                table.remove(eyeBeast.bombsList, j)
+            end
+        end
+
+        if
+            CheckCollision(
+                eyeBeast.x,
+                eyeBeast.y,
+                eyeBeast.img:getWidth(),
+                eyeBeast.img:getHeight(),
+                player.x,
+                player.y,
+                player.img:getWidth(),
+                player.img:getHeight()
+            ) and player.health > 0
+        then
+            player.health = 0
+        end
+    end
+
 
     -- Chickens
     for i, chicken in ipairs(chickens.list) do
