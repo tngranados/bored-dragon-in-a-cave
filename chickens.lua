@@ -14,7 +14,7 @@ end
 
 function chickens.update(dt)
     chickenTimer = chickenTimer - dt
-    if chickenTimer <= 0 then
+    if chickenTimer <= 0 and not bossBattle then
         chickenTimer = chickenTimerMax
         -- Creates new chicken
         rand = math.random(0, height - enemyImg:getHeight())
