@@ -94,7 +94,7 @@ function love.draw(dt)
 	-- Debug
 	if debug then
 		love.graphics.setFont(debugFont)
-		love.graphics.printf(tostring(love.timer.getFPS()), 20, 10, love.graphics.getWidth(), "left")
+		love.graphics.printf(tostring(love.timer.getFPS()), 20, love.graphics.getHeight()-38, love.graphics.getWidth(), "left")
 	end
 
 	-- Score
