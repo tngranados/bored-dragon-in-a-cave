@@ -18,15 +18,17 @@ local eyeBeast = require "eyebeast"
 local chickens = require "chickens"
 local projectiles = require "projectiles"
 local collisions = require "collisions"
+local background = require "background"
 
 score = 0
 endGame = false
 font = nil
 
-background = { x = 0, speed = 100 }
 
 function love.load(arg)
-	background.img = love.graphics.newImage("assets/background.png")
+	width, height = love.graphics.getDimensions()	
+
+	background.load()
 
 	player.load()
 	enemies.load()
@@ -40,15 +42,7 @@ function love.load(arg)
 end
 
 function love.update(dt)
-	width, height = love.graphics.getDimensions()
-
-	-- Background
-	if player.health > 0 and not endGame then
-		background.x = background.x + (background.speed * dt)
-		if background.x > width then
-			background.x = 0
-		end
-	end
+	background.update(dt)
 
 	-- Exit the game
 	if love.keyboard.isDown("escape") then
@@ -99,25 +93,17 @@ function love.update(dt)
 end
 
 function love.draw(dt)
-	-- Background
-	love.graphics.draw(background.img, 0 - background.x, 0)
-	if background.x > 0 then
-		love.graphics.draw(background.img, background.img:getWidth() - background.x, 0)
-	end
-
-	for i = 0, love.graphics.getWidth() / background.img:getWidth() - background.x do
-		love.graphics.draw(background.img, i * background.img:getWidth() - background.x, background.img:getHeight())
-    end
+	background.draw(dt)
 
 	-- Debug
 	if isDebug then
 		love.graphics.setFont(debugFont)
-		love.graphics.printf(tostring(love.timer.getFPS()), 20, love.graphics.getHeight()-38, love.graphics.getWidth(), "left")
+		love.graphics.printf(tostring(love.timer.getFPS()), 20, height-38, width, "left")
 	end
 
 	-- Score
 	love.graphics.setFont(fontSmall)
-	love.graphics.printf(score, 0, 10, love.graphics.getWidth() - 20, "right")
+	love.graphics.printf(score, 0, 10, width - 20, "right")
 
 	-- Game
 	if player.health > 0 and not endGame then
@@ -129,9 +115,9 @@ function love.draw(dt)
 		projectiles.draw(dt)
 	elseif endGame then
 		love.graphics.setFont(fontBig)
-		love.graphics.printf("You Won!", 0, love.graphics:getHeight() / 3, love.graphics.getWidth(), "center")
+		love.graphics.printf("You Won!", 0, love.graphics:getHeight() / 3, width, "center")
 	else
 		love.graphics.setFont(fontBig)
-		love.graphics.printf("Press 'R' to restart", 0, love.graphics:getHeight() / 3, love.graphics.getWidth(), "center")
+		love.graphics.printf("Press 'R' to restart", 0, love.graphics:getHeight() / 3, width, "center")
 	end
 end

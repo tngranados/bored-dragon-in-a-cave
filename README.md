@@ -23,6 +23,6 @@ Access the link to get the original asset and the information about its license.
 * Bat - [bevouliin.com](https://opengameart.org/content/villain-game-character-flappy-bat-monster-flying)
 * Dragon - [bevouliin.com](https://opengameart.org/content/flappy-dragon-sprite-sheets)
 * Fire ball - [Matheus Carvalho](https://opengameart.org/content/fireball-vector)
-* Cave - [PWL](https://opengameart.org/content/seamless-cave-background)
+* Cave - [PWL](https://opengameart.org/content/seamless-cave-in-parts)
 * Font - [NAL](http://www.1001fonts.com/future-timesplitters-font.html)
 * Ball - [fsvieira](https://opengameart.org/content/vector-svg-balls-with-5-colors)
