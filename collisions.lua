@@ -103,6 +103,8 @@ function collisions.update(dt)
             then
                 eyeBeast.health = eyeBeast.health - 1
                 if eyeBeast.health <= 0 then
+                    score = score + 5000
+                    score = score + 1000 * (player.health - 1)
                     endGame = true
                 end
                 table.remove(projectiles.list, j)
