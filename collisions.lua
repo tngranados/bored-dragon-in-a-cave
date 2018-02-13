@@ -62,9 +62,6 @@ function collisions.update(dt)
              then
                 table.remove(bees.list, i)
                 table.remove(projectiles.list, j)
-                if player.health < player.healthMax then
-                    player.health = player.health + 1
-                end
                 score = score + 500
             end
         end
@@ -179,6 +176,9 @@ function collisions.update(dt)
             )
          then
             table.remove(chickens.list, i)
+            if player.health < player.healthMax then
+                player.health = player.health + 1
+            end
             score = score + 1000
             player.shootLimit = 0
         end
